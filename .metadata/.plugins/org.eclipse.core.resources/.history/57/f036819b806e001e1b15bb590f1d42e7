@@ -1,0 +1,19 @@
+package com.rafaelpino.workshopmongo.resources.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+import com.rafaelpino.workshopmongo.services.exceptions.ObjectNotFoundException;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@ControllerAdvice //vai indicar que a classe é responsável por tratar possíveis erros nas requisições
+public class ResourceExceptionHandler {
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+//dentro desse método vai ter que ter o tratamento dessa exceção, quando estourar no meu serviço a exceção objetnot found vai gerar um standard error e retornar esse objeto
+	HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Não encontrado", e.getMessage(), request.getRequestURI());
+	return ResponseEntity.status(status).body(err); //controllar manualmente qual status que minha requisição vai passar
+	}
+}

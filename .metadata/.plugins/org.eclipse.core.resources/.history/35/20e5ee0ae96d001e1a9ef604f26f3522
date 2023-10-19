@@ -1,0 +1,26 @@
+package com.rafaelpino.workshopmongo.repositories;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.rafaelpino.workshopmongo.domain.Post;
+
+@Repository
+public interface PostRepository extends MongoRepository<Post, String>{
+
+	//Consulta simples com querymethods
+	List<Post> findByTitleContainingIgnoreCase(String text);
+	
+	//método personalizado
+	@Query("{ 'title': {$regex: ?0, $options: 'i'}}")//dentro do query coloca o json, ver na documentação do mongodb
+	List<Post> searchTitle(String text);
+	
+	
+	//Buscar posts contendo um dado string em qualquer lugar (no titulo, corpo ou comentarios) e em um dado intervalo de datas
+	@Query
+	List<Post> fullSearch(String text, Date minDate, Date maxDate);
+}

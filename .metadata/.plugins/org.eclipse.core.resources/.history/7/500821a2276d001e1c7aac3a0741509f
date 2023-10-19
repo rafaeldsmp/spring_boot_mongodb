@@ -1,0 +1,20 @@
+package com.rafaelpino.workshopmongo.repositories;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.rafaelpino.workshopmongo.domain.Post;
+
+@Repository
+public interface PostRepository extends MongoRepository<Post, String>{
+
+	//Consulta simples com querymethods
+	List<Post> findByTitleContainingIgnoreCase(String text);
+	
+	//método personalizado
+	@Query()//dentro do query coloca o json, ver na documentação do mongodb
+	List<Post> findByTitle(String text);
+}

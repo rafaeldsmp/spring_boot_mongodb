@@ -1,0 +1,31 @@
+package com.rafaelpino.workshopmongo.resources.util;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+/* O meu backend deve ser capaz de pegar o valor encodado e decodificar
+ * essa classe é o método para decodificar o parâmetro da url */
+public class URL {
+	public static String decodeParam(String text) { // static para não precisar instanciar um objeto url
+		try {
+			return URLDecoder.decode(text, "UTF-8"); //urldecor é uma função do java que irá exigir o texto que quero decodificar que é o text e qual vai ser o padrão de decodificação que vou usar
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
+	}
+	
+	//recebe um string como argumento, e também uma data padrão caso tenha uma falha na conversão que usará o default value
+	public static Date convertDate(String textDate, Date defaultValue) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			return sdf.parse(textDate);
+		} catch (ParseException e) {
+			return defaultValue;
+		}
+	}
+}

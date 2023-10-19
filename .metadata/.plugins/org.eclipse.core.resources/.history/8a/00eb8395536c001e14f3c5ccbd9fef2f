@@ -1,0 +1,5 @@
+package com.rafaelpino.workshopmongo.domain;
+
+public class Post {
+
+}
